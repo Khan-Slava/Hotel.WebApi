@@ -27,5 +27,25 @@ namespace Hotel.WebApi.Controllers
 
             return room;
         }
+
+        [HttpPut]
+        public StatusCodeResult Put([FromBody]Room room)
+        {
+            var data = _db.Rooms.FirstOrDefault(f=>f.Id.Equals(room.Id));
+            if(data != null)
+            {
+                data.Price = room.Price;
+                data.Name = room.Name;
+                data.Descriotion = room.Descriotion;
+                data.PathToImage = room.PathToImage;
+
+                _db.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
