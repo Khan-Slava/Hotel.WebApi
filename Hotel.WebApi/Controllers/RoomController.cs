@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Hotel.WebApi.Models;
+using Hotel.WebApi.Data;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebApi.Controllers
@@ -7,8 +9,8 @@ namespace Hotel.WebApi.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private HotelATRContext _db;
-        public RoomController(HotelATRContext db)
+        private HotelAtrContext _db;
+        public RoomController(HotelAtrContext db)
         {
             _db = db;
         }
@@ -16,6 +18,14 @@ namespace Hotel.WebApi.Controllers
         {
             var data = _db.Rooms;
             return data;
+        }
+        [HttpPost]
+        public Room Post(Room room)
+        {
+            _db.Rooms.Add(room);
+            _db.SaveChanges();
+
+            return room;
         }
     }
 }
